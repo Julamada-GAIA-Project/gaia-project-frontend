@@ -15,12 +15,12 @@ jobs:
 
     - name: Login to GitHub Packages
       run: echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
-    - name: Build Docker image
-      run: docker build -t docker.pkg.github.com/${{ github.repository }}/gaia_project_fe:latest .
       
     - name: Convert repository name to lowercase
       run: echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]' > repo_name.txt
+
+    - name: Build Docker image
+      run: cat repo_name.txt | xargs -I {} docker build -t docker.pkg.github.com/${{ github.repository }}/gaia_project_fe:latest .
 
     - name: Push Docker image to GitHub Packages
       run: |
