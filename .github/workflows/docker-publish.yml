@@ -19,5 +19,10 @@ jobs:
     - name: Build Docker image
       run: docker build -t docker.pkg.github.com/${{ github.repository }}/gaia_project_fe:latest .
       
+    - name: Convert repository name to lowercase
+      run: echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]' > repo_name.txt
+
     - name: Push Docker image to GitHub Packages
-      run: docker push docker.pkg.github.com/${{ github.repository }}/gaia_project_fe:latest
+      run: |
+        cat repo_name.txt | xargs -I {} docker tag docker.pkg.github.com/${{ github.repository }}/gaia_project_fe:latest docker.pkg.github.com/{}/gaia_project_fe:latest
+        cat repo_name.txt | xargs -I {} docker push docker.pkg.github.com/{}/gaia_project_fe:latest
