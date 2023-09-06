@@ -17,7 +17,7 @@ jobs:
       run: echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
     - name: Build Docker image
-      run: docker build -t docker.pkg.github.com/${{ github.repository }}/mi-app-react:latest .
+      run: docker build -t docker.pkg.github.com/${{ github.repository }}/gaia_project_fe:latest .
       
     - name: Push Docker image to GitHub Packages
-      run: docker push docker.pkg.github.com/${{ github.repository }}/mi-app-react:latest
+      run: docker push docker.pkg.github.com/${{ github.repository }}/gaia_project_fe:latest
